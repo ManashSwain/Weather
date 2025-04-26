@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 
 const Weather = () => {
+
+    // search functionality 
   const search = async (city) => {
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
         import.meta.env.VITE_WEATHER_API
       }`;
       const response = await fetch(url);
