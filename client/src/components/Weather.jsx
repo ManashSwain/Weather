@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Weather = () => {
+  const search = async (city) => {
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${
+        import.meta.env.VITE_WEATHER_API
+      }`;
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    search("london");
+  }, []);
   return (
     <div className="p-5 rounded-lg border-spacing-8">
       {/* search component  */}
@@ -47,37 +63,31 @@ const Weather = () => {
       </form>
       {/* weather information  */}
       <div className="h-4/5 w-full border-1 border-red-50 bg-red-700 mt-4 flex">
-       
         {/* data container  */}
         <div className="basis-1/2">
           <img src="" alt="" />
           <div className="">
             <h1>London UK</h1>
-            <h2>28  °C</h2>
+            <h2>28 °C</h2>
           </div>
         </div>
         {/* information 1  */}
-       <div className=" flex basis-1/2 p-5">
-       <div className="w-44 h-44 bg-purple-700 rounded-lg m-2">
-                dfgdf
-                </div>
-                   {/* information 2  */}
-                   <div className="w-44 h-44 bg-purple-700 rounded-lg m-2">
-                dfgdf
-                </div>
-       </div>
+        <div className=" flex basis-1/2 p-5">
+          <div className="w-44 h-44 bg-purple-700 rounded-lg m-2">dfgdf</div>
+          {/* information 2  */}
+          <div className="w-44 h-44 bg-purple-700 rounded-lg m-2">dfgdf</div>
+        </div>
       </div>
 
       {/* Highlights component  */}
       <div>
         <h1>Today's Highlights</h1>
         <div>
-            <div>
-                <img src="" alt="" />
-                <h2>Feels Like</h2>
-                <h2></h2>
-            </div>
-            
+          <div>
+            <img src="" alt="" />
+            <h2>Feels Like</h2>
+            <h2></h2>
+          </div>
         </div>
       </div>
     </div>
