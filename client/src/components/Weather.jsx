@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState} from "react";
 
 const Weather = () => {
+
+    const [weatherData , setWeatherData] = useState(false);
+    const [cityname , setCityName] = useState("");
+    const refElement = useRef();
 
     // search functionality 
   const search = async (city) => {
@@ -10,15 +14,20 @@ const Weather = () => {
       }`;
       const response = await fetch(url);
       const data = await response.json();
+      setWeatherData({
+        temperature : data.main.temp 
+      })
+      setCityName("");
       console.log(data);
     } catch (err) {
       console.log(err);
     }
   };
-
   useEffect(() => {
     search("london");
   }, []);
+
+  
   return (
     <div className="p-5 rounded-lg border-spacing-8">
       {/* search component  */}
@@ -50,13 +59,18 @@ const Weather = () => {
           </div>
           <input
             type="search"
+            ref={refElement}
+            onChange={(e)=>setCityName(e.target.value)}
+            value={cityname}
+            
             id="default-search"
             class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search Mockups, Logos..."
+            placeholder="Search city"
             required
           />
           <button
-            type="submit"
+          onClick={()=>{search(cityname)}}
+            type="button"
             class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Search
@@ -88,7 +102,7 @@ const Weather = () => {
           <div>
             <img src="" alt="" />
             <h2>Feels Like</h2>
-            <h2></h2>
+            <h2>{weatherData.temperature}</h2>
           </div>
         </div>
       </div>
